@@ -20,7 +20,7 @@ defmodule StateMachineEndpoint.EndpointController do
     json conn, convert_structure(params)
   end
 
-  def delete(conn, %{ "id" => id }) do
+  def delete(conn, %{ "app" => id }) do
     json conn, Endpoints.delete_endpoint(id)
   end
 end

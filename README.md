@@ -51,4 +51,24 @@ with `JSON` return data of
 }
 ```
 
+## Deleting a mock application
+
+`POST /pull-state`
+
+with `JSON` body:
+
+```json
+{
+	"app": "APP"
+}
+```
+
+### Example
+
+```json
+{
+	"app": "app"
+}
+```
+
 
