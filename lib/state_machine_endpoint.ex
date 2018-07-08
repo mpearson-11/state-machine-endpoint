@@ -12,7 +12,7 @@ defmodule StateMachineEndpoint do
       supervisor(StateMachineEndpoint.Endpoint, []),
       # Start your own worker by calling: StateMachineEndpoint.Worker.start_link(arg1, arg2, arg3)
       # worker(StateMachineEndpoint.Worker, [arg1, arg2, arg3]),
-      {StateMachineEndpoint.GenServer, name: EndpointCollector}
+      {StateMachineEndpoint.Server, name: Server}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

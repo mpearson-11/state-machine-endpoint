@@ -7,68 +7,27 @@ To start your Phoenix app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-# To Use
+---
+## Push State Request Example [1]
+| url         | method | body | response | information |
+|-------------|--------|------|----------|-------------|
+| /state/push | POST | `{ "app": "app1", "path": "/hello", "method": "GET", "json": { "message": "Hello World!!" }}` | `{ "message": "Application now running on url: /api/app1/hello, method: GET" }` | Creates response for `/api/app1/*` with path `/hello` when request sent using `GET` http request method.
+| /state/push | POST | `{ "app": "app2", "path": "/bye", "method": "POST", "json": { "message": "Bye World!!" }}` | `{ "message": "Application now running on url: /api/app2/bye, method: POST" }` | Creates response for `/api/app2/*` with path `/bye` when request sent using `POST` http request method.
 
-`iex -S mix phoenix.server`
+## Pull State Request Example [2]
+| url         | method | body | response | information |
+|-------------|--------|------|----------|-------------|
+| /state/pull    | POST   | `{ "app": "app1" }` | `{ "message": "Endpoint for app: app1 was deleted !!" }` | Deletes app1 from served endpoints.
+| /state/pull    | POST   | `{ "app": "app2" }` | `{ "message": "Endpoint for app: app2 was deleted !!" }` | Deletes app2 from served endpoints.
 
-## Creating an application mock
+## Reset State Request Example [3]
+| url         | method | body | response |
+|-------------|--------|------|----------|
+| /state/reset    | POST   | `{ "password": .... }` | `{ "message": "Cleared" }` |
 
-`POST /push-state`
-
-with `JSON` body:
-
-```json
-{
-	"app": "APP",
-	"path": "/[ROUTE]",
-	"method": "[HTTP METHOD]",
-	"json": {
-		"data": {}
-	}
-}
-```
-
-### Example
-
-```json
-{
-	"app": "app",
-	"path": "/hello-world",
-	"method": "GET",
-	"json": {
-		"message": "Hello World"
-	}
-}
-```
-
-Exposes route `/api/app/hello-world`
-
-with `JSON` return data of
-
-```json
-{
-	"message": "Hello World"
-}
-```
-
-## Deleting a mock application
-
-`POST /pull-state`
-
-with `JSON` body:
-
-```json
-{
-	"app": "APP"
-}
-```
-
-### Example
-
-```json
-{
-	"app": "app"
-}
-```
-
+## Responses from [1]
+| url             | method   | response                          |
+|-----------------| -------- | --------------------------------- |
+| /api/app1/hello | GET      | `{ "message": "Hello World!!" }`  |
+| /api/app2/bye   | POST     | `{ "message": "Bye World!!" }`    |
 

@@ -13,15 +13,15 @@ defmodule StateMachineEndpoint.Router do
     put "/:app_id/*path", ApiController, :put
   end
 
-  scope "/push-state", StateMachineEndpoint do
+  scope "/state", StateMachineEndpoint do
     pipe_through :api
 
-    post "/", EndpointController, :create
-  end
+    post "/pull", EndpointController, :delete
+    post "/push", EndpointController, :create
+    post "/reset", EndpointController, :reset
 
-  scope "/pull-state", StateMachineEndpoint do
-    pipe_through :api
-
-    post "/", EndpointController, :delete
+    # Deal with all other paths
+    get "/*path", EndpointController, :error
+    post "/*path", EndpointController, :error
   end
 end

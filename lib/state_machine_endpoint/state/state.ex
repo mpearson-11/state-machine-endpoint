@@ -1,11 +1,11 @@
 defmodule StateMachineEndpoint.State do
   alias StateMachineEndpoint.State
-  alias StateMachineEndpoint.State.Endpoint
+  alias StateMachineEndpoint.State.AppEndpoint
 
   defstruct [endpoints: %{}]
 
   defp create_endpoints(%State{endpoints: oe}, endpoint) do
-    id = endpoint |> Endpoint.get(:id)
+    id = endpoint |> AppEndpoint.get(:id)
     Map.put(oe, id, endpoint)
   end
 
