@@ -1,44 +1,12 @@
-defmodule Endpoint do
-  defstruct [id: nil, url: "", method: "GET", json: %{}]
-
-  def get(e, :id), do: e.__struct__.id
-  def get(e, :url), do: e.__struct__.url
-  def get(e, :method), do: e.__struct__.method
-  def get(e, :json), do: e.__struct__.json
-end
-
-defmodule State do
-  defstruct [endpoints: %{}]
-
-  defp create_endpoints(%State{endpoints: oe}, endpoint) do
-    id = endpoint
-    |> Endpoint.get(:id)
-
-    Map.put(oe, id, endpoint)
-  end
-
-  def set_endpoints(%State{endpoints: oe}, endpoint) do
-    %State{endpoints: create_endpoints(oe, endpoint)}
-  end
-
-  def get_endpoints(%State{ endpoints: e }), do: e
-
-  def get_by_id(state, id) do
-    endpoints = get_endpoints(state)
-
-    if Map.has_key?(endpoints, id) do
-      endpoints[id]
-    else
-      nil
-    end
-  end
-end
-
 defmodule StateMachineEndpoint.GenServer do
+  alias StateMachineEndpoint.State
   use GenServer
 
   def start_link(params) do
-    GenServer.start_link(__MODULE__, params, __MODULE__)
+    IO.puts("-------------------------------------------------------------------")
+    IO.puts("StateMachineEndpoint GenServer just started with empty endpoints!!!")
+    IO.puts("-------------------------------------------------------------------")
+    GenServer.start_link(__MODULE__, %{}, params)
   end
 
   def init(_params) do
@@ -46,18 +14,27 @@ defmodule StateMachineEndpoint.GenServer do
   end
 
   def handle_cast({:set, :endpoint, endpoint}, state) do
+    IO.puts("-------------------------------------------------------------------")
+    IO.puts(" New endpoint")
+    IO.inspect(endpoint)
+    IO.puts("-------------------------------------------------------------------")
     {:noreply, State.set_endpoints(state, endpoint)}
   end
 
-  def handle_call({:get, :endpoints}, state) do
+  def handle_cast({:delete, :endpoint, id}, state) do
+    IO.puts("-------------------------------------------------------------------")
+    IO.puts(" Deleting endpoint: #{id}")
+    IO.puts("-------------------------------------------------------------------")
+    %State{endpoints: e} = state
+    {:noreply, %State{endpoints:  Map.delete(e, id)}}
+  end
+
+  def handle_call({:get, :endpoints}, _from, state) do
     {:reply, State.get_endpoints(state), state}
   end
 
-  def handle_call({:get, :endpoint, id}, state) do
-    endpoint = state
-    |> State.get_endpoints
-    |> State.get_by_id(id)
-
+  def handle_call({:get, :endpoint, id}, _from, state) do
+    endpoint = state |> State.get_by_id(id)
     {:reply, endpoint, state}
   end
 end

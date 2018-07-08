@@ -7,12 +7,48 @@ To start your Phoenix app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+# To Use
 
-## Learn more
+`iex -S mix phoenix.server`
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Creating an application mock
+
+`POST /push-state`
+
+with `JSON` body:
+
+```json
+{
+	"app": "APP",
+	"path": "/[ROUTE]",
+	"method": "[HTTP METHOD]",
+	"json": {
+		"data": {}
+	}
+}
+```
+
+### Example
+
+```json
+{
+	"app": "app",
+	"path": "/hello-world",
+	"method": "GET",
+	"json": {
+		"message": "Hello World"
+	}
+}
+```
+
+Exposes route `/api/app/hello-world`
+
+with `JSON` return data of
+
+```json
+{
+	"message": "Hello World"
+}
+```
+
+
