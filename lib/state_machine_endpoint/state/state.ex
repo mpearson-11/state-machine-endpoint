@@ -1,19 +1,26 @@
 defmodule StateMachineEndpoint.State do
   alias StateMachineEndpoint.State
-  alias StateMachineEndpoint.State.AppEndpoint
+  alias StateMachineEndpoint.State.Config
+  alias StateMachineEndpoint.State.ConfigList
 
   defstruct [endpoints: %{}]
 
-  defp create_endpoints(%State{endpoints: oe}, endpoint) do
-    id = endpoint |> AppEndpoint.get(:id)
-    Map.put(oe, id, endpoint)
+  def get_endpoints(%State{ endpoints: e }), do: e
+
+  defp create_endpoints(state, endpoint) do
+    id = endpoint |> Config.get(:id)
+    old_endpoints = get_endpoints(state)
+
+    if !Map.has_key?(old_endpoints, id) == true do
+      Map.put(old_endpoints, id, %ConfigList{list: [endpoint]})
+    else
+      Map.put(old_endpoints, id, ConfigList.add(endpoint, old_endpoints[id]))
+    end
   end
 
   def set_endpoints(state, endpoint) do
     %State{endpoints: create_endpoints(state, endpoint)}
   end
-
-  def get_endpoints(%State{ endpoints: e }), do: e
 
   def get_by_id(state, id) do
     endpoints = get_endpoints(state)

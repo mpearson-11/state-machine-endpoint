@@ -27,7 +27,14 @@ defmodule StateMachineEndpoint.Server do
     IO.puts("--- Deleting endpoint: #{id}")
     IO.puts("-------------------------------------------------------------------")
     %State{endpoints: e} = state
-    {:noreply, %State{endpoints:  Map.delete(e, id)}}
+    {:noreply, %State{endpoints: Map.delete(e, id)}}
+  end
+
+  def handle_cast(:clear, state) do
+    IO.puts("-------------------------------------------------------------------")
+    IO.puts("--- HARD RESET !!")
+    IO.puts("-------------------------------------------------------------------")
+    {:noreply, @start_state}
   end
 
   def handle_call({:get, :endpoints}, _from, state) do
@@ -37,12 +44,5 @@ defmodule StateMachineEndpoint.Server do
   def handle_call({:get, :endpoint, id}, _from, state) do
     endpoint = state |> State.get_by_id(id)
     {:reply, endpoint, state}
-  end
-
-  def handle_cast(:clear, state) do
-    IO.puts("-------------------------------------------------------------------")
-    IO.puts("--- HARD RESET !!")
-    IO.puts("-------------------------------------------------------------------")
-    {:noreply, @start_state}
   end
 end

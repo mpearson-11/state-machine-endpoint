@@ -1,11 +1,11 @@
 defmodule StateMachineEndpoint.EndpointController do
   use StateMachineEndpoint.Web, :controller
-  alias StateMachineEndpoint.{Apps, State.AppEndpoint}
+  alias StateMachineEndpoint.{Apps, State.Config}
 
   defp set_message(_, message), do: %{message: message}
 
   defp convert_structure(%{ "app" => id, "json" => json_data, "method" => method, "path" => path }) do
-    %AppEndpoint{id: id, json: json_data, method: method, path: path}
+    %Config{id: id, json: json_data, method: method, path: path}
     |> Apps.create_endpoint
     |> set_message("Application now running on url: /api/#{id}#{path}, method: #{method}")
   end
