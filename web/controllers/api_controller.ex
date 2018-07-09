@@ -4,15 +4,15 @@ defmodule StateMachineEndpoint.ApiController do
   alias StateMachineEndpoint.State.ConfigList
   alias StateMachineEndpoint.Apps
 
-  def get_data([]), do: %{message: "No match found for path" }
+  def get_data([]), do: %{message: "No match found for path!!" }
   def get_data([ %Config{json: json_data} ]) do
     json_data
   end
-  def expand_url(path), do: "/#{Enum.join(path, "/")}"
+
   def find_config_list(list, path, method) do
-    Enum.filter(list, fn(config) ->
-      Config.equal(expand_url(path), method, config)
-    end) |> get_data
+    list
+    |> Enum.filter(&(Config.equal(path, method, &1)))
+    |> get_data
   end
 
   def get_endpoint_data(nil, _path, _method), do: %{ message: "App does not exist!!" }
