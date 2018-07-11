@@ -23,7 +23,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 ## Reset State Request Example [3]
 | url         | method | body | response |
 |-------------|--------|------|----------|
-| /state/reset    | POST   | `{ "password": .... }` | `{ "message": "Cleared" }` |
+| /state/reset    | POST   | `{ "message": "Cleared" }` |
 
 ## Responses from [1]
 | url             | method   | response                          |
