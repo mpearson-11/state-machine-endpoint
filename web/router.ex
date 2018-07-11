@@ -1,5 +1,13 @@
 defmodule StateMachineEndpoint.Router do
   use StateMachineEndpoint.Web, :router
+  
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -23,5 +31,11 @@ defmodule StateMachineEndpoint.Router do
     # Deal with all other paths
     get "/*path", EndpointController, :error
     post "/*path", EndpointController, :error
+  end
+
+  scope "/app", StateMachineEndpoint do
+    pipe_through :browser
+
+    get "/", PageController, :index
   end
 end

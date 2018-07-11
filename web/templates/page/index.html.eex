@@ -1,0 +1,21 @@
+<form action="/state/push" method="POST" enctype='application/json'>
+    <div class="o-container u-margin-top-large">
+        <div class="o-layout u-margin-top-large">
+            <div class="o-layout__item u-margin-top-small">
+                <input name="app" placeholder="Application" class="c-form-input u-width-1/1" />
+            </div>
+            <div class="o-layout__item u-margin-top-small">
+                <textarea name="json" class="c-form-input u-width-1/1"></textarea>
+             </div>
+            <div class="o-layout__item u-margin-top-small">
+                <input name="method" placeholder="Request Method" class="c-form-input u-width-1/1" />
+            </div>
+            <div class="o-layout__item u-margin-top-small">
+                <input name="path" placeholder="Request Path" class="c-form-input u-width-1/1" />
+            </div>
+            <div class="o-layout__item u-margin-top-small">
+                <input type="submit" value="Create Application" />
+            </div>
+        </div>
+    </div>
+</form>

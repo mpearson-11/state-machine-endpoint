@@ -19,7 +19,7 @@ defmodule StateMachineEndpoint.Mixfile do
   def application do
     [
       mod: {StateMachineEndpoint, []},
-      extra_applications: [:logger, :json]
+      extra_applications: [:logger, :json, :httpotion]
     ]
   end
 
@@ -34,10 +34,12 @@ defmodule StateMachineEndpoint.Mixfile do
     [
       {:phoenix, "~> 1.3.2"},
       {:phoenix_pubsub, "~> 1.0"},
+      {:phoenix_html, "~> 2.10"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:json, "~> 1.2"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:httpotion, "~> 3.1.0"}
     ]
   end
 end
