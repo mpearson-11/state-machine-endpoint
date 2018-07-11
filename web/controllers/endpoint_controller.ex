@@ -3,15 +3,18 @@ defmodule StateMachineEndpoint.EndpointController do
   alias StateMachineEndpoint.{Apps, State.Config}
 
   defp set_message(_, message), do: %{message: message}
-  defp mutate_json(params = %{"json" => json}) when is_map(json) do
-    try do
-      Map.put(params, "json", Poison.decode!(json))
-    rescue
-      _ -> nil
+  defp mutate_json(params) do
+    json = params["json"]
+
+    if is_map(json) == true do
+      params
+    else
+      try do
+        Map.put(params, "json", Poison.decode!(json))
+      rescue
+        _ -> nil
+      end
     end
-  end
-  defp mutate_json(params = %{"json" => json}) when is_map(json) do
-    params
   end
 
   defp convert_structure(%{ "app" => id, "json" => json_data, "method" => method, "path" => path }) do
