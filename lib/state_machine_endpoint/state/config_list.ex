@@ -22,7 +22,7 @@ defmodule StateMachineEndpoint.State.ConfigList do
     end)
   end
 
-  def add(config, config_list) do
+  def add(config_list, config) do
     old_list = get(config_list)
 
     if duplicate?(config_list, config) do

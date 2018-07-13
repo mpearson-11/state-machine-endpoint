@@ -14,7 +14,7 @@ defmodule StateMachineEndpoint.State do
     if !Map.has_key?(old_endpoints, id) == true do
       Map.put(old_endpoints, id, %ConfigList{list: [endpoint]})
     else
-      Map.put(old_endpoints, id, ConfigList.add(endpoint, old_endpoints[id]))
+      Map.put(old_endpoints, id, ConfigList.add(old_endpoints[id], endpoint))
     end
   end
 

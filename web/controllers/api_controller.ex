@@ -1,18 +1,19 @@
 defmodule StateMachineEndpoint.ApiController do
   use StateMachineEndpoint.Web, :controller
-  alias StateMachineEndpoint.State.Config
-  alias StateMachineEndpoint.State.ConfigList
-  alias StateMachineEndpoint.Apps
 
-  def get_data([]), do: %{message: "No match found for path!!" }
-  def get_data([ %Config{json: json_data} ]) do
-    json_data
+  alias StateMachineEndpoint.{Apps, Util}
+  alias StateMachineEndpoint.State.{Config, ConfigList}
+
+  def get_data([], _path), do: %{message: "No match found for path!!" }
+  def get_data([config], path) do
+    %Config{json: json_data, path: config_path} = config
+    %{"data" => json_data, "params" => Util.get_param_matches(path, config_path)}
   end
 
   def find_config_list(list, path, method) do
     list
     |> Enum.filter(&(Config.equal(path, method, &1)))
-    |> get_data
+    |> get_data(path)
   end
 
   def get_endpoint_data(nil, _path, _method), do: %{ message: "App does not exist!!" }

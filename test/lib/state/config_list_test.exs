@@ -32,15 +32,15 @@ defmodule StateMachineEndpoint.State.ConfigListTest do
     config_list = %ConfigList{}
 
     # Add first config
-    new_config_list = ConfigList.add(config_1, config_list)
+    new_config_list = ConfigList.add(config_list, config_1)
     assert new_config_list == %ConfigList{list: [config_1]}
 
     # Add next new config
-    next_config_list = ConfigList.add(config_2, new_config_list)
+    next_config_list = ConfigList.add(new_config_list, config_2)
     assert next_config_list == %ConfigList{list: [config_1, config_2]}
 
     # Add a duplicated path config (expect last list!!)
-    final_config_list = ConfigList.add(config_3, next_config_list)
+    final_config_list = ConfigList.add(next_config_list, config_3)
 
     # No duplicated routes
     assert final_config_list == next_config_list

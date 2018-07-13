@@ -13,11 +13,16 @@ defmodule StateMachineEndpoint.StateTest do
     endpoint_1 = %Config{id: "config_1", path: "/path-1"}
     endpoint_2 = %Config{id: "config_1", path: "/path-2"}
   
-    config_list = ConfigList.add(endpoint_1, %ConfigList{})
+    expected_list = %ConfigList{}
+    |> ConfigList.add(endpoint_1)
+    |> ConfigList.add(endpoint_2)
 
-    new_state = State.set_endpoints(%State{}, endpoint_1)
+    new_state = %State{}
+    |> State.set_endpoints(endpoint_1)
+    |> State.set_endpoints(endpoint_2)
+
     endpoints = State.get_endpoints(new_state)
 
-    assert endpoints["config_1"] == config_list
+    assert endpoints["config_1"] == expected_list
   end
 end
