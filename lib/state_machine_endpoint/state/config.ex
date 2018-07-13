@@ -10,9 +10,9 @@ defmodule StateMachineEndpoint.State.Config do
 
   def equal(path, method, endpoint) do
     if get(endpoint, :method) == method && Util.path_eq?(path, get(endpoint, :path)) do
-      get(endpoint, :json)
+      true
     else
-      nil
+      false
     end
   end
 end

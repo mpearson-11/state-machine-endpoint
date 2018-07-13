@@ -26,7 +26,7 @@ defmodule StateMachineEndpoint.State.ConfigList do
     old_list = get(config_list)
 
     if duplicate?(config_list, config) do
-      nil
+      config_list
     else
       set(old_list, config)
     end
