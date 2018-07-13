@@ -8,8 +8,8 @@ defmodule StateMachineEndpoint.State.ConfigList do
     old_list
   end
 
-  def set(new_list, config) do
-    %ConfigList{list: new_list ++ [config]}
+  def set(old_list, config) do
+    %ConfigList{list: old_list ++ [config]}
   end
 
   def config_path(%Config{path: p}, equal_path) do

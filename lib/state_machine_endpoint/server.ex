@@ -4,9 +4,7 @@ defmodule StateMachineEndpoint.Server do
   @start_state(%State{})
 
   def start_link(params) do
-    IO.puts("-------------------------------------------------------------------")
-    IO.puts("StateMachineEndpoint GenServer just started with empty endpoints   ")
-    IO.puts("-------------------------------------------------------------------")
+    StateMachineEndpoint.Message.log("StateMachineEndpoint GenServer just started with empty endpoints")
     GenServer.start_link(__MODULE__, %{}, params)
   end
 
@@ -15,25 +13,18 @@ defmodule StateMachineEndpoint.Server do
   end
 
   def handle_cast({:set, :endpoint, endpoint}, state) do
-    IO.puts("-------------------------------------------------------------------")
-    IO.puts("--- New endpoint")
-    IO.inspect(endpoint)
-    IO.puts("-------------------------------------------------------------------")
+    StateMachineEndpoint.Message.log("New endpoint", :inspect)
     {:noreply, State.set_endpoints(state, endpoint)}
   end
 
   def handle_cast({:delete, :endpoint, id}, state) do
-    IO.puts("-------------------------------------------------------------------")
-    IO.puts("--- Deleting endpoint: #{id}")
-    IO.puts("-------------------------------------------------------------------")
+    StateMachineEndpoint.Message.log("Deleting endpoint: #{id}")
     %State{endpoints: e} = state
     {:noreply, %State{endpoints: Map.delete(e, id)}}
   end
 
   def handle_cast(:clear, state) do
-    IO.puts("-------------------------------------------------------------------")
-    IO.puts("--- HARD RESET !!")
-    IO.puts("-------------------------------------------------------------------")
+    StateMachineEndpoint.Message.log("HARD RESET")
     {:noreply, @start_state}
   end
 
