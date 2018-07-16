@@ -21,7 +21,7 @@ textarea {
                     <div class="o-layout__item u-margin-top-small">
                         <label>JSON</label>
                         <textarea name="json" class="c-form-input u-width-1/1 custom-height"></textarea>
-                        </div>
+                    </div>
                     <div class="o-layout__item u-margin-top-small">
                         <label>Method GET/POST/PUT</label>
                         <input name="method" class="c-form-input u-width-1/1" />
