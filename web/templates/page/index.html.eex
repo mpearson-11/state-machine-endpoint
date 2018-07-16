@@ -19,3 +19,17 @@
         </div>
     </div>
 </form>
+
+<div class="o-container u-margin-top-large">
+    <p>All Routes being served</p>
+
+    <table>
+        <%= for app <- @apps do %>
+            <tr>
+                <td><%= app["name"] %></td>
+                <td><%= app["path"] %></td>
+                <td><%= app["method"] %></td>
+            </tr>
+        <%= end %>
+    </table>
+</div>

@@ -7,7 +7,7 @@ defmodule StateMachineEndpoint.ApiController do
   def get_data([], _path), do: %{message: "No match found for path!!" }
   def get_data([config], path) do
     %Config{json: json_data, path: config_path} = config
-    %{"data" => json_data, "params" => Util.get_param_matches(path, config_path)}
+    json_data
   end
 
   def find_config_list(list, path, method) do

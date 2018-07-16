@@ -1,5 +1,6 @@
 defmodule StateMachineEndpoint.Util do
   @param_key ":"
+  alias StateMachineEndpoint.State.{Config, ConfigList}
 
   defp is_param?(app_key) do
     String.starts_with?(app_key, @param_key)
@@ -66,5 +67,30 @@ defmodule StateMachineEndpoint.Util do
     else
       %{}
     end
+  end
+
+  # %{
+  #   "tom" => %StateMachineEndpoint.State.ConfigList{
+  #     list: [
+  #       %StateMachineEndpoint.State.Config{
+  #         id: "tom",
+  #         json: %{"message" => "Hello World Basic Yo !!"},
+  #         method: "GET",
+  #         path: "/hello-world/:partyId"
+  #       }
+  #     ]
+  #   }
+  # }
+
+  def add_to_list(app_name, %Config{id: id, method: method, path: path}) do
+    %{"name" => app_name, "id" => id, "method" => method, "path" => path}
+  end
+
+  def convert_endpoints_to_list(endpoints) do
+    apps = Map.keys(endpoints)
+    Enum.reduce(apps, [], fn(app_key, acc) -> 
+      %ConfigList{list: app_list} = endpoints[app_key]
+      acc ++ Enum.map(app_list, &(add_to_list(app_key, &1)))
+    end)
   end
 end
