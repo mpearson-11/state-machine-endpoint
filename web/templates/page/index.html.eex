@@ -1,35 +1,54 @@
-<form action="/state/push" method="POST" enctype='application/json'>
-    <div class="o-container u-margin-top-large">
-        <div class="o-layout u-margin-top-large">
-            <div class="o-layout__item u-margin-top-small">
-                <input name="app" placeholder="Application" class="c-form-input u-width-1/1" />
-            </div>
-            <div class="o-layout__item u-margin-top-small">
-                <textarea name="json" class="c-form-input u-width-1/1"></textarea>
-             </div>
-            <div class="o-layout__item u-margin-top-small">
-                <input name="method" placeholder="Request Method" class="c-form-input u-width-1/1" />
-            </div>
-            <div class="o-layout__item u-margin-top-small">
-                <input name="path" placeholder="Request Path" class="c-form-input u-width-1/1" />
-            </div>
-            <div class="o-layout__item u-margin-top-small">
-                <input type="submit" value="Create Application" />
-            </div>
+<style>
+.custom-height {
+    height: 300px;
+}
+textarea {
+   resize: none;
+}
+.input {
+    border: 2px 2px;
+}
+</style>
+<div class="o-container u-margin-top-large">
+    <div class="o-layout">
+        <div class="o-layout__item u-width-1/2">
+            <form action="/state/push" method="POST" enctype='application/json'>
+                <div class="o-layout">
+                    <div class="o-layout__item">
+                        <label>Application</label>
+                        <input name="app" class="c-form-input u-width-1/1" />
+                    </div>
+                    <div class="o-layout__item u-margin-top-small">
+                        <label>JSON</label>
+                        <textarea name="json" class="c-form-input u-width-1/1 custom-height"></textarea>
+                        </div>
+                    <div class="o-layout__item u-margin-top-small">
+                        <label>Method GET/POST/PUT</label>
+                        <input name="method" class="c-form-input u-width-1/1" />
+                    </div>
+                    <div class="o-layout__item u-margin-top-small">
+                        <label>Path starting with /</label>
+                        <input name="path" class="c-form-input u-width-1/1" />
+                    </div>
+                    <div class="o-layout__item u-margin-top-small">
+                        <input type="submit" value="Create Application" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="o-layout__item u-width-1/2">
+            <h1>Routes</1h>
+            <hr class="u-margin-top-small" />
+            <table>
+                <%= for app <- @apps do %>
+                    <tr>
+                        <td><%= app["name"] %></td>
+                        <td><%= app["path"] %></td>
+                        <td><%= app["method"] %></td>
+                        <td><a href="<%= app["uri"] %>"><%= app["uri"] %></a></td>
+                    </tr>
+                <% end %>
+            </table>
         </div>
     </div>
-</form>
-
-<div class="o-container u-margin-top-large">
-    <p>All Routes being served</p>
-
-    <table>
-        <%= for app <- @apps do %>
-            <tr>
-                <td><%= app["name"] %></td>
-                <td><%= app["path"] %></td>
-                <td><%= app["method"] %></td>
-            </tr>
-        <%= end %>
-    </table>
 </div>

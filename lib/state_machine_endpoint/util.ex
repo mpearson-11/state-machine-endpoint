@@ -69,21 +69,14 @@ defmodule StateMachineEndpoint.Util do
     end
   end
 
-  # %{
-  #   "tom" => %StateMachineEndpoint.State.ConfigList{
-  #     list: [
-  #       %StateMachineEndpoint.State.Config{
-  #         id: "tom",
-  #         json: %{"message" => "Hello World Basic Yo !!"},
-  #         method: "GET",
-  #         path: "/hello-world/:partyId"
-  #       }
-  #     ]
-  #   }
-  # }
-
   def add_to_list(app_name, %Config{id: id, method: method, path: path}) do
-    %{"name" => app_name, "id" => id, "method" => method, "path" => path}
+    %{
+      "name" => app_name,
+      "id" => id,
+      "method" => method,
+      "path" => path,
+      "uri" => "/api/#{app_name}#{path}"
+    }
   end
 
   def convert_endpoints_to_list(endpoints) do
