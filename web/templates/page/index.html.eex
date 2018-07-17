@@ -10,12 +10,9 @@ textarea {
 }
 </style>
 
-<script type="text/javscript">
-    $('select.dropdown').dropdown();
-</script>
-
 <div class="ui container">
     <br />
+    <h1 class="ui header">Create Endpoint</h1>
     <form action="/state/push" method="POST" enctype='application/json'>
         <div class="ui grid">
             <div class="sixteen wide column">
@@ -27,11 +24,12 @@ textarea {
                 </div>
             </div>
             <div class="sixteen wide column">
-                <div class="ui fluid labeled input">
-                    <div class="ui label">
-                        Method
-                    </div>
-                    <input name="method" />
+                <div class="field">
+                    <select class="ui fluid dropdown" id="method" name="method">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="POST">PUT</option>
+                    </select>
                 </div>
             </div>
             <div class="sixteen wide column">
@@ -55,6 +53,8 @@ textarea {
             </div>
         </div>
     </form>
+    <br />
+    <h1 class="ui header">All Endpoints</h1>
     <div class="ui grid">
         <div class="column">
             <table class="ui celled table">
@@ -80,3 +80,7 @@ textarea {
         </div>
     </div>
 </div>
+
+<script>
+    $('select.dropdown').dropdown();
+</script>

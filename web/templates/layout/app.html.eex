@@ -1,6 +1,7 @@
  <html>
     <!-- Your App's Stylesheets/Assets, for example: -->
     <link rel="stylesheet" href="css/semantic.css">
+    <link rel="stylesheet" href="js/semantic.js">
     <body>
         <main>
             <%= render @view_module, @view_template, assigns %>
