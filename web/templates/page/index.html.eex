@@ -3,43 +3,70 @@
     height: 300px;
 }
 textarea {
-   resize: none;
+   resize: none !important;
 }
 .input {
     border: 2px 2px;
 }
 </style>
-<div class="o-container u-margin-top-large">
-    <div class="o-layout">
-        <div class="o-layout__item u-width-1/2">
-            <form action="/state/push" method="POST" enctype='application/json'>
-                <div class="o-layout">
-                    <div class="o-layout__item">
-                        <label>Application</label>
-                        <input name="app" class="c-form-input u-width-1/1" />
+
+<script type="text/javscript">
+    $('select.dropdown').dropdown();
+</script>
+
+<div class="ui container">
+    <br />
+    <form action="/state/push" method="POST" enctype='application/json'>
+        <div class="ui grid">
+            <div class="sixteen wide column">
+                <div class="ui fluid labeled input">
+                    <div class="ui label">
+                        Application
                     </div>
-                    <div class="o-layout__item u-margin-top-small">
-                        <label>JSON</label>
+                    <input name="app" />
+                </div>
+            </div>
+            <div class="sixteen wide column">
+                <div class="ui fluid labeled input">
+                    <div class="ui label">
+                        Method
+                    </div>
+                    <input name="method" />
+                </div>
+            </div>
+            <div class="sixteen wide column">
+                <div class="ui fluid labeled input">
+                    <div class="ui label">
+                        Path
+                    </div>
+                    <input name="path" class="c-form-input u-width-1/1" />
+                </div>
+            </div>
+            <div class="sixteen wide column">
+                <div class="ui form">
+                    <label>JSON Data</label>
+                    <div class="field">
                         <textarea name="json" class="c-form-input u-width-1/1 custom-height"></textarea>
                     </div>
-                    <div class="o-layout__item u-margin-top-small">
-                        <label>Method GET/POST/PUT</label>
-                        <input name="method" class="c-form-input u-width-1/1" />
-                    </div>
-                    <div class="o-layout__item u-margin-top-small">
-                        <label>Path starting with /</label>
-                        <input name="path" class="c-form-input u-width-1/1" />
-                    </div>
-                    <div class="o-layout__item u-margin-top-small">
-                        <input type="submit" value="Create Application" />
-                    </div>
                 </div>
-            </form>
+            </div>
+            <div class="sixteen wide column">
+                <input type="submit" value="Create Application" class="positive ui button" />
+            </div>
         </div>
-        <div class="o-layout__item u-width-1/2">
-            <h1>Routes</1h>
-            <hr class="u-margin-top-small" />
-            <table>
+    </form>
+    <div class="ui grid">
+        <div class="column">
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Application</th>
+                        <th>Path</th>
+                        <th>Method</th>
+                        <th>Mock URI</th>
+                    </tr>
+                </thead>
+                <tbody>
                 <%= for app <- @apps do %>
                     <tr>
                         <td><%= app["name"] %></td>
@@ -48,6 +75,7 @@ textarea {
                         <td><a href="<%= app["uri"] %>"><%= app["uri"] %></a></td>
                     </tr>
                 <% end %>
+                </tbody>
             </table>
         </div>
     </div>
