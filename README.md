@@ -31,3 +31,12 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 | /api/app1/hello | GET      | `{ "message": "Hello World!!" }`  |
 | /api/app2/bye   | POST     | `{ "message": "Bye World!!" }`    |
 
+## Page routes
+
+/add
+  - Create an Applcation with endpoints with UI
+/rm
+  - Remove an Applcation with endpoints with UI
+/
+  - View all Application endpoints with UI
+

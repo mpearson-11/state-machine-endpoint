@@ -1,60 +1,8 @@
-<style>
-.custom-height {
-    height: 300px;
-}
-textarea {
-   resize: none !important;
-}
-.input {
-    border: 2px 2px;
-}
-</style>
-
+<br />
 <div class="ui container">
-    <br />
-    <h1 class="ui header">Create Endpoint</h1>
-    <form action="/state/push" method="POST" enctype='application/json'>
-        <div class="ui grid">
-            <div class="sixteen wide column">
-                <div class="ui fluid labeled input">
-                    <div class="ui label">
-                        Application
-                    </div>
-                    <input name="app" />
-                </div>
-            </div>
-            <div class="sixteen wide column">
-                <div class="field">
-                    <select class="ui fluid dropdown" id="method" name="method">
-                        <option value="GET">GET</option>
-                        <option value="POST">POST</option>
-                        <option value="POST">PUT</option>
-                    </select>
-                </div>
-            </div>
-            <div class="sixteen wide column">
-                <div class="ui fluid labeled input">
-                    <div class="ui label">
-                        Path
-                    </div>
-                    <input name="path" class="c-form-input u-width-1/1" />
-                </div>
-            </div>
-            <div class="sixteen wide column">
-                <div class="ui form">
-                    <label>JSON Data</label>
-                    <div class="field">
-                        <textarea name="json" class="c-form-input u-width-1/1 custom-height"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="sixteen wide column">
-                <input type="submit" value="Create Application" class="positive ui button" />
-            </div>
-        </div>
-    </form>
-    <br />
-    <h1 class="ui header">All Endpoints</h1>
+    <h4 class="ui horizontal divider header">
+        All Endpoints
+    </h4>
     <div class="ui grid">
         <div class="column">
             <table class="ui celled table">

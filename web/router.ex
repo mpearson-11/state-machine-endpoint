@@ -13,6 +13,15 @@ defmodule StateMachineEndpoint.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/", StateMachineEndpoint do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/add", PageController, :create
+    get "/rm", PageController, :delete
+    get "/*path", PageController, :error
+  end
+
   scope "/api", StateMachineEndpoint do
     pipe_through :api
 
@@ -31,11 +40,5 @@ defmodule StateMachineEndpoint.Router do
     # Deal with all other paths
     get "/*path", EndpointController, :error
     post "/*path", EndpointController, :error
-  end
-
-  scope "/app", StateMachineEndpoint do
-    pipe_through :browser
-
-    get "/", PageController, :index
   end
 end
