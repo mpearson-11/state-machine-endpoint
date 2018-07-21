@@ -19,11 +19,10 @@ defmodule StateMachineEndpoint.Server do
 
   def handle_cast({:delete, :endpoint, id}, state) do
     StateMachineEndpoint.Message.log("Deleting endpoint: #{id}")
-    %State{endpoints: e} = state
-    {:noreply, %State{endpoints: Map.delete(e, id)}}
+    {:noreply, %State{endpoints: Map.delete(State.get_endpoints(state), id)}}
   end
 
-  def handle_cast(:clear, state) do
+  def handle_cast(:clear, _state) do
     StateMachineEndpoint.Message.log("HARD RESET")
     {:noreply, @start_state}
   end

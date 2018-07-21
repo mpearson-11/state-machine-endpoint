@@ -1,9 +1,8 @@
 defmodule StateMachineEndpoint.State do
-  alias StateMachineEndpoint.State
-  alias StateMachineEndpoint.State.Config
-  alias StateMachineEndpoint.State.ConfigList
-
   defstruct [endpoints: %{}]
+
+  alias StateMachineEndpoint.State
+  alias StateMachineEndpoint.State.{Config, ConfigList}
 
   def get_endpoints(%State{ endpoints: e }), do: e
 

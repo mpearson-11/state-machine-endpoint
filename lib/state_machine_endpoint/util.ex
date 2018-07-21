@@ -6,7 +6,7 @@ defmodule StateMachineEndpoint.Util do
     String.starts_with?(app_key, @param_key)
   end
   defp param_key(app_key) do
-    String.replace(app_key, ":", "")
+    app_key |> String.replace(@param_key, "")
   end
 
   defp equal_keys(nil, _url_key), do: false
@@ -81,7 +81,7 @@ defmodule StateMachineEndpoint.Util do
 
   def convert_endpoints_to_list(endpoints) do
     apps = Map.keys(endpoints)
-    Enum.reduce(apps, [], fn(app_key, acc) -> 
+    Enum.reduce(apps, [], fn(app_key, acc) ->
       %ConfigList{list: app_list} = endpoints[app_key]
       acc ++ Enum.map(app_list, &(add_to_list(app_key, &1)))
     end)
