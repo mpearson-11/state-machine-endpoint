@@ -19,6 +19,7 @@ defmodule StateMachineEndpoint.Router do
     get "/:app_id/*path", ApiController, :get
     post "/:app_id/*path", ApiController, :post
     put "/:app_id/*path", ApiController, :put
+    options "/:app_id/*path", ApiController, :options
   end
 
   scope "/state", StateMachineEndpoint do
@@ -28,7 +29,7 @@ defmodule StateMachineEndpoint.Router do
     post "/push", EndpointController, :create
     post "/reset", EndpointController, :reset
 
-    # Deal with all other paths
+    # Wildcard catch
     get "/*path", EndpointController, :error
     post "/*path", EndpointController, :error
   end
@@ -39,6 +40,9 @@ defmodule StateMachineEndpoint.Router do
     get "/", PageController, :index
     get "/add", PageController, :create
     get "/rm", PageController, :delete
+
+    # Wildcard catch
     get "/*path", PageController, :error
+    post "/*path", PageController, :error
   end
 end

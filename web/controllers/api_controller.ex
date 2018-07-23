@@ -4,6 +4,18 @@ defmodule StateMachineEndpoint.ApiController do
   alias StateMachineEndpoint.{Apps, Util}
   alias StateMachineEndpoint.State.{Config, ConfigList}
 
+  def find_request_headers([]) do
+    nil
+  end
+  def find_request_headers([head | tail]) do
+    {name, value} = head
+    if name == "access-control-request-method" do
+      value
+    else
+      find_request_headers(tail)
+    end
+  end
+
   def get_data([], _path), do: %{message: "No match found for path!!" }
   def get_data([config], path) do
     %Config{json: json_data, path: config_path} = config
@@ -43,6 +55,17 @@ defmodule StateMachineEndpoint.ApiController do
     data = id
     |> Apps.get_endpoint
     |> get_endpoint_data(path, "PUT")
+
+    json conn, data
+  end
+
+  def options(conn, %{"path" => path, "app_id" => id}) do
+    %Plug.Conn{req_headers: h} = conn
+    method = find_request_headers(h)
+    
+    data = id
+    |> Apps.get_endpoint
+    |> get_endpoint_data(path, method)
 
     json conn, data
   end
