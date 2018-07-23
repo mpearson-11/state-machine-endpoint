@@ -1,25 +1,44 @@
 defmodule StateMachineEndpoint.Server do
   alias StateMachineEndpoint.State
   use GenServer
+
   @start_state(%State{})
+  @datastore "datastore.bin"
+
+  defp write_store(state) do
+    File.write!(@datastore, :erlang.term_to_binary(state))
+  end
+
+  defp read_store do
+    File.read!(@datastore) |> :erlang.binary_to_term
+  end
 
   def start_link(params) do
     StateMachineEndpoint.Message.log("StateMachineEndpoint GenServer just started with empty endpoints")
-    GenServer.start_link(__MODULE__, %{}, params)
+    GenServer.start_link(__MODULE__, read_store(), params)
   end
 
-  def init(_params) do
-    {:ok, @start_state}
+  def init(start_state) do
+    {:ok, start_state}
   end
 
   def handle_cast({:set, :endpoint, endpoint}, state) do
     StateMachineEndpoint.Message.log("New endpoint", :inspect)
-    {:noreply, State.set_endpoints(state, endpoint)}
+    new_state = state
+    |> State.set_endpoints(endpoint)
+
+    # Write to datastore.bin
+    write_store(new_state)
+    {:noreply, new_state}
   end
 
   def handle_cast({:delete, :endpoint, id}, state) do
     StateMachineEndpoint.Message.log("Deleting endpoint: #{id}")
-    {:noreply, %State{endpoints: Map.delete(State.get_endpoints(state), id)}}
+    new_state = %State{endpoints: Map.delete(State.get_endpoints(state), id)}
+
+    # Write to datastore.bin
+    write_store(new_state)
+    {:noreply, new_state}
   end
 
   def handle_cast(:clear, _state) do
