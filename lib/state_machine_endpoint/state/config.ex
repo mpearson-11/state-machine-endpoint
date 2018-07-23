@@ -1,5 +1,6 @@
 defmodule StateMachineEndpoint.State.Config do
   defstruct [id: nil, path: "", method: "GET", json: %{}]
+
   alias StateMachineEndpoint.State.Config
   alias StateMachineEndpoint.Util
 

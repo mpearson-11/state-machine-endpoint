@@ -1,7 +1,7 @@
 defmodule StateMachineEndpoint.ApiController do
   use StateMachineEndpoint.Web, :controller
 
-  alias StateMachineEndpoint.{Apps, Util}
+  alias StateMachineEndpoint.Apps
   alias StateMachineEndpoint.State.{Config, ConfigList}
 
   def find_request_headers([]) do
@@ -17,9 +17,8 @@ defmodule StateMachineEndpoint.ApiController do
   end
 
   def get_data([], _path), do: %{message: "No match found for path!!" }
-  def get_data([config], path) do
-    %Config{json: json_data, path: config_path} = config
-    json_data
+  def get_data([config], _path) do
+    Config.get(config, :json)
   end
 
   def find_config_list(list, path, method) do

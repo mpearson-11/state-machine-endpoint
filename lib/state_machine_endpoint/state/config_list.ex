@@ -1,8 +1,7 @@
 defmodule StateMachineEndpoint.State.ConfigList do
   defstruct [list: []]
 
-  alias StateMachineEndpoint.State.ConfigList
-  alias StateMachineEndpoint.State.Config
+  alias StateMachineEndpoint.State.{Config, ConfigList}
 
   def get(%ConfigList{list: old_list}) do
     old_list
@@ -16,16 +15,14 @@ defmodule StateMachineEndpoint.State.ConfigList do
     p == equal_path
   end
 
-  def duplicate?(%ConfigList{ list: old_list }, %Config{path: path}) do
-    Enum.any?(old_list, fn(item) ->
-      config_path(item, path)
-    end)
+  def exists_config_path?(%ConfigList{ list: old_list }, %Config{path: path}) do
+    Enum.any?(old_list, &(config_path(&1, path)))
   end
 
   def add(config_list, config) do
     old_list = get(config_list)
 
-    if duplicate?(config_list, config) do
+    if exists_config_path?(config_list, config) do
       config_list
     else
       set(old_list, config)

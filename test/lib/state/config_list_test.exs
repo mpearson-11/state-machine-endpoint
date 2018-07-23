@@ -1,7 +1,6 @@
 defmodule StateMachineEndpoint.State.ConfigListTest do
   use ExUnit.Case
-  alias StateMachineEndpoint.State.ConfigList
-  alias StateMachineEndpoint.State.Config
+  alias StateMachineEndpoint.State.{Config, ConfigList}
 
   @config_1(%Config{id: "config_1", path: "/test/path-1", method: "GET", json: %{ "body" => "config_1" } })
   @config_2(%Config{id: "config_2", path: "/test/path-2", method: "GET", json: %{ "body" => "config_2" } })
@@ -9,10 +8,10 @@ defmodule StateMachineEndpoint.State.ConfigListTest do
 
   @config_list(%ConfigList{list: [@config_1, @config_2]})
 
-  test "duplicate?/2" do
-    assert ConfigList.duplicate?(@config_list, @config_1) == true
-    assert ConfigList.duplicate?(@config_list, @config_2) == true
-    assert ConfigList.duplicate?(@config_list, @config_3) == false
+  test "exists_config_path?/2" do
+    assert ConfigList.exists_config_path?(@config_list, @config_1) == true
+    assert ConfigList.exists_config_path?(@config_list, @config_2) == true
+    assert ConfigList.exists_config_path?(@config_list, @config_3) == false
   end
 
   test "get/1" do
