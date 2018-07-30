@@ -10,15 +10,14 @@ defmodule StateMachineEndpoint.Server do
   end
 
 
-  defp to_binary(""), do: @start_state
-  defp to_binary(store) when is_binary(store) == true do
+  defp to_binary({:error, :enoent}), do: @start_state
+  defp to_binary({:ok, ""}), do: @start_state
+  defp to_binary({:ok, store}) when is_binary(store) == true do
     store |> :erlang.binary_to_term
   end
 
-  defp to_binary(store), do: @start_state
-
   defp read_store do
-    File.read!(@datastore) |> to_binary
+    File.read(@datastore) |> to_binary
   end
 
   def start_link(params) do
