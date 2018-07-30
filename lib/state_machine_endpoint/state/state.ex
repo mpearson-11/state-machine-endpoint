@@ -30,4 +30,19 @@ defmodule StateMachineEndpoint.State do
       nil
     end
   end
+
+  def reduce_to_list(%ConfigList{list: config_list}, hash) do
+    Enum.reduce(config_list, [], fn(config, acc) ->
+      if hash != Config.get(config, :hash) do
+        acc ++ [config]
+      else
+        acc
+      end
+    end)
+  end
+
+  def remove_endpoint_path(endpoints, id, hash) do
+    endpoint_list = %ConfigList{list: reduce_to_list(endpoints[id], hash) }
+    Map.put(endpoints, id, endpoint_list)
+  end
 end

@@ -14,8 +14,12 @@ defmodule StateMachineEndpoint.PageController do
     render conn, "create.html"
   end
 
-  def delete(conn, _params) do
-    render conn, "delete.html"
+  def delete_app(conn, _params) do
+    render conn, "delete_app.html"
+  end
+
+  def delete_path(conn, _params) do
+    render conn, "delete_path.html"
   end
 
   def error(conn, _params) do

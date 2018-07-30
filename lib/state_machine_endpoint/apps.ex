@@ -16,6 +16,15 @@ defmodule StateMachineEndpoint.Apps do
     end
   end
 
+  def delete_endpoint_path(id, hash) do
+    if get_endpoint(id) do
+      Server |> GenServer.cast({:delete_endpoint, :path, id, hash})
+      %{message: "Endpoint for app: #{id} with hash: #{hash} was deleted !!"}
+    else
+      %{message: "Endpoint for app: #{id} doesn't exist!!"}
+    end
+  end
+
   def create_endpoint(endpoint) do
     Server |> GenServer.cast({ :set, :endpoint, endpoint })
   end

@@ -2,6 +2,11 @@ defmodule StateMachineEndpoint.Util do
   @param_key ":"
   alias StateMachineEndpoint.State.{Config, ConfigList}
 
+  def hash(str) do
+    :crypto.hash(:sha256, str)
+    |> Base.encode16
+  end
+
   defp is_param?(app_key) do
     String.starts_with?(app_key, @param_key)
   end
@@ -69,12 +74,13 @@ defmodule StateMachineEndpoint.Util do
     end
   end
 
-  def add_to_list(app_name, %Config{id: id, method: method, path: path}) do
+  def add_to_list(app_name, %Config{id: id, method: method, path: path, hash: hash}) do
     %{
       "name" => app_name,
       "id" => id,
       "method" => method,
       "path" => path,
+      "hash" => hash,
       "uri" => "/api/#{app_name}#{path}"
     }
   end

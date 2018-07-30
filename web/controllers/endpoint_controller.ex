@@ -1,6 +1,6 @@
 defmodule StateMachineEndpoint.EndpointController do
   use StateMachineEndpoint.Web, :controller
-  alias StateMachineEndpoint.{Apps, State.Config}
+  alias StateMachineEndpoint.{Apps, State.Config, Util}
 
   defp set_message(_, message), do: %{message: message}
   defp mutate_json(params) do
@@ -18,7 +18,7 @@ defmodule StateMachineEndpoint.EndpointController do
   end
 
   defp convert_structure(%{ "app" => id, "json" => json_data, "method" => method, "path" => path }) do
-    %Config{id: id, json: json_data, method: method, path: path}
+    %Config{id: id, json: json_data, method: method, path: path, hash: Util.hash("#{id}#{path}")}
     |> Apps.create_endpoint
     |> set_message("Application now running on url: /api/#{id}#{path}, method: #{method}")
   end
@@ -32,6 +32,10 @@ defmodule StateMachineEndpoint.EndpointController do
     |> convert_structure
 
     json conn, data
+  end
+
+  def delete(conn, %{ "app" => id, "hash" => hash }) do
+    json conn, Apps.delete_endpoint_path(id, hash)
   end
 
   def delete(conn, %{ "app" => id }) do

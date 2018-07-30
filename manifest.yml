@@ -3,7 +3,7 @@ env:
   MIX_ENV: prod
 applications:
 - name: state-machine-endpoint
-  memory: 1024M
+  memory: 512M
   instances: 1
   buildpack: https://github.com/HashNuke/heroku-buildpack-elixir.git
   # NOTE: Running the migration here assumes instances will always be set to 1!

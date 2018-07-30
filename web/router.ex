@@ -39,7 +39,8 @@ defmodule StateMachineEndpoint.Router do
 
     get "/", PageController, :index
     get "/add", PageController, :create
-    get "/rm", PageController, :delete
+    get "/delete-app", PageController, :delete_app
+    get "/delete-path", PageController, :delete_path
 
     # Wildcard catch
     get "/*path", PageController, :error

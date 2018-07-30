@@ -19,6 +19,8 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 |-------------|--------|------|----------|-------------|
 | /state/pull    | POST   | `{ "app": "app1" }` | `{ "message": "Endpoint for app: app1 was deleted !!" }` | Deletes app1 from served endpoints.
 | /state/pull    | POST   | `{ "app": "app2" }` | `{ "message": "Endpoint for app: app2 was deleted !!" }` | Deletes app2 from served endpoints.
+| /state/pull    | POST   | `{ "app": "app1", "hash": .... }` | `{ "message": "Endpoint for app: app1 with hash .... was deleted !!" }` | Deletes path for app1 with hash.
+| /state/pull    | POST   | `{ "app": "app2", "hash": .... }` | `{ "message": "Endpoint for app: app2 with hash .... was deleted  !!" }` | Deletes path for app2 with hash.
 
 ## Reset State Request Example [3]
 | url         | method | body | response |
@@ -33,10 +35,15 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Page routes
 
-/add
-  - Create an Applcation with endpoints with UI
-/rm
-  - Remove an Applcation with endpoints with UI
-/
+- **/**
   - View all Application endpoints with UI
+
+- **/add**
+  - Create an Application with endpoints with UI
+
+- **/delete-app**
+  - Remove an Application with namespace /:app
+
+- **/delete-path**
+  - Remove an Application's path associated with its hash
 

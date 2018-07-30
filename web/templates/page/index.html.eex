@@ -11,6 +11,7 @@
                         <th>Application</th>
                         <th>Path</th>
                         <th>Method</th>
+                        <th>Hash</th>
                         <th>Mock URI</th>
                     </tr>
                 </thead>
@@ -20,6 +21,7 @@
                         <td><%= app["name"] %></td>
                         <td><%= app["path"] %></td>
                         <td><%= app["method"] %></td>
+                        <td><%= app["hash"] %></td>
                         <td><a href="<%= app["uri"] %>"><%= app["uri"] %></a></td>
                     </tr>
                 <% end %>
