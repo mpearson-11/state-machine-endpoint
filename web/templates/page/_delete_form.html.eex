@@ -1,7 +1,7 @@
 <br />
 <%= if @from_server == true do %>
     <div class="ui container">
-        <%= form_for @conn, endpoint_path(@conn, :delete), fn f -> %>
+        <%= form_for @conn, endpoint_path(@conn, :delete), fn _form -> %>
             <div class="ui raised segments">
                 <div class="ui segment">
                     <%= render StateMachineEndpoint.PageView, "_field_readonly.html", name: "app", humanized: "Application", value: @app_value %>
@@ -23,7 +23,7 @@
     </div>
 <% else %>
     <div class="ui container">
-        <%= form_for @conn, endpoint_path(@conn, :delete), fn f -> %>
+        <%= form_for @conn, endpoint_path(@conn, :delete), fn _form -> %>
             <div class="ui raised segments">
                 <div class="ui segment">
                     <%= render StateMachineEndpoint.PageView, "_field_with_value.html", name: "app", humanized: "Application", value: @app_value %>

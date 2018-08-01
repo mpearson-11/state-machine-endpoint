@@ -1,4 +1,6 @@
 defmodule StateMachineEndpoint.Server do
+  @moduledoc false
+
   alias StateMachineEndpoint.State
   use GenServer
 
@@ -17,7 +19,9 @@ defmodule StateMachineEndpoint.Server do
   end
 
   defp read_store do
-    File.read(@datastore) |> to_binary
+    @datastore
+    |> File.read
+    |> to_binary
   end
 
   def start_link(params) do
@@ -30,7 +34,7 @@ defmodule StateMachineEndpoint.Server do
   end
 
   def handle_cast({:set, :endpoint, endpoint}, state) do
-    StateMachineEndpoint.Message.log("New endpoint", :inspect)
+    StateMachineEndpoint.Message.log("New endpoint")
     new_state = state
     |> State.set_endpoints(endpoint)
 
@@ -50,7 +54,9 @@ defmodule StateMachineEndpoint.Server do
 
   def handle_cast({:delete_endpoint, :path, id, hash}, state) do
     StateMachineEndpoint.Message.log("Deleting endpoint path: #{id} -> #{hash}")
-    endpoints = State.get_endpoints(state)
+
+    endpoints = state
+    |> State.get_endpoints
     |> State.remove_endpoint_path(id, hash)
 
     new_state = %State{endpoints: endpoints}

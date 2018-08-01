@@ -1,4 +1,5 @@
 defmodule StateMachineEndpoint.Util do
+  @moduledoc false
   @param_key ":"
   alias StateMachineEndpoint.State.{Config, ConfigList}
 
@@ -19,7 +20,7 @@ defmodule StateMachineEndpoint.Util do
     is_param?(app_key) || app_key == url_key
   end
 
-  defp accumulate({ item, index }, acc) do
+  defp accumulate({item, index}, acc) do
     Map.put(acc, "param-#{index}", item)
   end
 
@@ -54,7 +55,7 @@ defmodule StateMachineEndpoint.Util do
     end
   end
 
-  defp reduce_params({ item, index }, acc, url_abs_path) do
+  defp reduce_params({item, index}, acc, url_abs_path) do
     case is_param?(item) do
       true -> Map.put(acc, param_key(item), Enum.at(url_abs_path, index))
       _ -> acc

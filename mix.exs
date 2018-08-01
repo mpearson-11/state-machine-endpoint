@@ -39,7 +39,8 @@ defmodule StateMachineEndpoint.Mixfile do
       {:cowboy, "~> 1.0"},
       {:json, "~> 1.2"},
       {:poison, "~> 3.1"},
-      {:httpotion, "~> 3.1.0"}
+      {:httpotion, "~> 3.1.0"},
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]
   end
 end
