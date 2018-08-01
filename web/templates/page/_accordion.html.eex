@@ -1,0 +1,6 @@
+<div class="ui styled fluid accordion">
+  <div class="title"> JSON </div>
+  <div class="content">
+    <%= render StateMachineEndpoint.PageView, "_textarea.html", name: @app["hash"], text: @app["json"], readonly: true %>
+  </div>
+</div>

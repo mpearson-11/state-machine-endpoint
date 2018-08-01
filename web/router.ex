@@ -1,6 +1,6 @@
 defmodule StateMachineEndpoint.Router do
   use StateMachineEndpoint.Web, :router
-  
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -41,6 +41,7 @@ defmodule StateMachineEndpoint.Router do
     get "/add", PageController, :create
     get "/delete-app", PageController, :delete_app
     get "/delete-path", PageController, :delete_path
+    get "/delete/:app_id/:hash", PageController, :delete_form
 
     # Wildcard catch
     get "/*path", PageController, :error

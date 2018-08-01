@@ -1,0 +1,9 @@
+<div class="ui form">
+    <div class="ui fluid input big">
+        <%= if @readonly && @readonly == true do %>
+            <textarea name="<%= @name %>" class="custom-height" readonly="true"><%= @text %></textarea>
+        <% else %>
+            <textarea name="<%= @name %>" class="custom-height" required="true"><%= @text %></textarea>
+        <% end %>
+    </div>
+</div>

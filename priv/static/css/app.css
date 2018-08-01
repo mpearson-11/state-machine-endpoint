@@ -1,0 +1,10 @@
+.custom-height {
+    max-height: 550px !important;
+    height: 550px !important;
+}
+textarea {
+   resize: none !important;
+}
+.input {
+    border: 2px 2px;
+}

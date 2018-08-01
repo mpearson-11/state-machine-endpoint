@@ -1,10 +1,18 @@
  <html>
-    <!-- Your App's Stylesheets/Assets, for example: -->
-    <link rel="stylesheet" href="css/semantic.css">
-    <link rel="stylesheet" href="js/semantic.js">
+    <head>
+        <link rel="stylesheet" href="<%= static_path(@conn, "/css/semantic.css") %>">
+        <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <!-- Your App's Stylesheets/Assets, for example: -->
+        <script src="<%= static_path(@conn, "/js/semantic.js") %>"></script>
+    </head>
     <body>
         <main>
             <%= render @view_module, @view_template, assigns %>
+            <script>
+                $('.ui.accordion').accordion();
+                $('select.dropdown').dropdown();
+            </script>
         </main>
     </body>
  </html>

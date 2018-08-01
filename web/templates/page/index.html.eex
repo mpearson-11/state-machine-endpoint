@@ -1,36 +1,26 @@
 <br />
 <div class="ui container">
-    <h4 class="ui horizontal divider header">
-        All Endpoints
-    </h4>
-    <div class="ui grid">
-        <div class="column">
-            <table class="ui celled table">
-                <thead>
-                    <tr>
-                        <th>Application</th>
-                        <th>Path</th>
-                        <th>Method</th>
-                        <th>Hash</th>
-                        <th>Mock URI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <%= for app <- @apps do %>
-                    <tr>
-                        <td><%= app["name"] %></td>
-                        <td><%= app["path"] %></td>
-                        <td><%= app["method"] %></td>
-                        <td><%= app["hash"] %></td>
-                        <td><a href="<%= app["uri"] %>"><%= app["uri"] %></a></td>
-                    </tr>
-                <% end %>
-                </tbody>
-            </table>
+    <div class="ui segments">
+    <%= for app <- @apps do %>
+        <div class="ui horizontal segments">
+            <div class="ui segment massive fluid">
+                <a href="<%= uri_path(app) %>" class="fluid ui button"/><%= uri_path(app) %></a>
+            </div>
+            <div class="ui segment massive fluid">
+                <a href="<%= delete_path(app) %>" class="negative fluid ui button"/>Delete Endpoint</a>
+            </div>
         </div>
+        <div class="ui horizontal segments">
+            <div class="ui segment big"><b><%= app["method"] %></b></div>
+            <div class="ui segment big"><%= "/api/#{app["id"]}" %></div>
+            <div class="ui segment big"><%= app["path"] %></div>
+            <div class="ui segment big"><b>HASH:</b> <%= app["hash"] %></div>
+        </div>
+        <div class="ui segments">
+            <div class="ui segment">
+                <%= render StateMachineEndpoint.PageView, "_accordion.html", app: app %>
+            </div>
+        </div>
+    <% end %>
     </div>
 </div>
-
-<script>
-    $('select.dropdown').dropdown();
-</script>

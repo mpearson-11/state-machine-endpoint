@@ -1,31 +1,13 @@
-<style>
-.custom-height {
-    height: 300px;
-}
-textarea {
-   resize: none !important;
-}
-.input {
-    border: 2px 2px;
-}
-</style>
-
 <br />
 <div class="ui container">
-    <h4 class="ui horizontal divider header">
-        Application/Endpoint Creation Page
-    </h4>
     <form action="/state/push" method="POST" enctype='application/json'>
-        <div class="ui grid">
-            <div class="sixteen wide column">
-                <div class="ui fluid labeled input">
-                    <div class="ui label">
-                        Application
-                    </div>
-                    <input name="app" required="true" />
-                </div>
+        <div class="ui raised segments">
+            <div class="ui segment">
+                <%= render StateMachineEndpoint.PageView, "_field_no_value.html", name: "app", humanized: "Application" %>
             </div>
-            <div class="sixteen wide column">
+        </div>
+        <div class="ui raised segments">
+            <div class="ui segment big">
                 <div class="field">
                     <select class="ui fluid dropdown" id="method" name="method" required="true">
                         <option value="GET">GET</option>
@@ -34,26 +16,20 @@ textarea {
                     </select>
                 </div>
             </div>
-            <div class="sixteen wide column">
-                <div class="ui fluid labeled input">
-                    <div class="ui label">
-                        Path
-                    </div>
-                    <input name="path" class="c-form-input u-width-1/1" required="true" />
-                </div>
+        </div>
+        <div class="ui raised segments">
+            <div class="ui segment">
+                <%= render StateMachineEndpoint.PageView, "_field_no_value.html", name: "path", humanized: "Path" %>
             </div>
-            <div class="sixteen wide column">
-                <div class="ui form">
-                    <label>JSON Data</label>
-                    <div class="field">
-                        <textarea name="json" class="c-form-input u-width-1/1 custom-height" required="true"></textarea>
-                    </div>
-                </div>
+        </div>
+        <div class="ui raised segments">
+            <div class="ui segment">
+                <%= render StateMachineEndpoint.PageView, "_textarea.html", name: "json", text: "", readonly: false %>
             </div>
-            <div class="sixteen wide column center aligned">
-                <div class="ui form">
-                    <input type="submit" value="Create Application and Endpoints" class="positive ui button" />
-                </div>
+        </div>
+        <div class="ui raised segments">
+            <div class="ui segment">
+                <%= render StateMachineEndpoint.PageView, "_button.html", value: "Create Application Endpoint" %>
             </div>
         </div>
     </form>

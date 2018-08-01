@@ -22,6 +22,10 @@ defmodule StateMachineEndpoint.PageController do
     render conn, "delete_path.html"
   end
 
+  def delete_form(conn, %{"app_id" => id, "hash" => hash }) do
+    render conn, "_delete_form.html", app: id, hash: hash, hash_included: true, from_server: true
+  end
+
   def error(conn, _params) do
     json conn, %{message: "No such route!! "}
   end

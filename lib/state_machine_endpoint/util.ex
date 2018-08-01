@@ -74,14 +74,14 @@ defmodule StateMachineEndpoint.Util do
     end
   end
 
-  def add_to_list(app_name, %Config{id: id, method: method, path: path, hash: hash}) do
+  def add_to_list(app_name, %Config{id: id, method: method, path: path, hash: hash, json: json}) do
     %{
       "name" => app_name,
       "id" => id,
       "method" => method,
       "path" => path,
       "hash" => hash,
-      "uri" => "/api/#{app_name}#{path}"
+      "json" => Poison.encode!(json, pretty: true)
     }
   end
 

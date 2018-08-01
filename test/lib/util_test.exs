@@ -3,10 +3,10 @@ defmodule StateMachineEndpoint.UtilTest do
   alias StateMachineEndpoint.Util
   alias StateMachineEndpoint.State.{ConfigList, Config}
 
-  @config_1(%Config{id: "config_1", path: "/test/path-1", method: "GET", json: %{ "body" => "config_1" } })
-  @config_2(%Config{id: "config_2", path: "/test/path-2", method: "GET", json: %{ "body" => "config_2" } })
-  @config_3(%Config{id: "config_3", path: "/test/path-3", method: "GET", json: %{ "body" => "config_3" } })
-  @config_4(%Config{id: "config_4", path: "/test/path-4", method: "GET", json: %{ "body" => "config_4" } })
+  @config_1(%Config{id: "config_1", path: "/test/path-1", method: "GET", json: %{ "body" => "config_1" }, hash: "1234"})
+  @config_2(%Config{id: "config_2", path: "/test/path-2", method: "GET", json: %{ "body" => "config_2" }, hash: "1234" })
+  @config_3(%Config{id: "config_3", path: "/test/path-3", method: "GET", json: %{ "body" => "config_3" }, hash: "1234" })
+  @config_4(%Config{id: "config_4", path: "/test/path-4", method: "GET", json: %{ "body" => "config_4" }, hash: "1234" })
 
   @config_list_1(%ConfigList{list: [@config_1, @config_2]})
   @config_list_2(%ConfigList{list: [@config_3, @config_4]})
@@ -32,28 +32,32 @@ defmodule StateMachineEndpoint.UtilTest do
       "method" => "GET",
       "name" => "app-1",
       "path" => "/test/path-1",
-      "uri" => "/api/app-1/test/path-1"
+      "hash" => "1234",
+      "json" => "{\n  \"body\": \"config_1\"\n}"
     }
     assert Enum.at(ui_endpoint_list, 1) == %{
       "id" => "config_2",
       "method" => "GET",
       "name" => "app-1",
       "path" => "/test/path-2",
-      "uri" => "/api/app-1/test/path-2"
+      "hash" => "1234",
+      "json" => "{\n  \"body\": \"config_2\"\n}"
     }
     assert Enum.at(ui_endpoint_list, 2) == %{
       "id" => "config_3",
       "method" => "GET",
       "name" => "app-2",
       "path" => "/test/path-3",
-      "uri" => "/api/app-2/test/path-3"
+      "hash" => "1234",
+      "json" => "{\n  \"body\": \"config_3\"\n}"
     }
     assert Enum.at(ui_endpoint_list, 3) == %{
       "id" => "config_4",
       "method" => "GET",
       "name" => "app-2",
       "path" => "/test/path-4",
-      "uri" => "/api/app-2/test/path-4"
+      "hash" => "1234",
+      "json" => "{\n  \"body\": \"config_4\"\n}"
     }
   end
 end
