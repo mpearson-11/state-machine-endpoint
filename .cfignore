@@ -5,3 +5,5 @@
 erl_crash.dump
 /node_modules
 /rel
+docker-compose.yml
+Dockerfile
