@@ -1,1 +1,9 @@
-<%= render StateMachineEndpoint.PageView, "_delete_form.html", app: nil, hash: nil, hash_included: true, from_server: false %>
+<%=
+    render StateMachineEndpoint.PageView,
+    "_delete_form.html",
+    app_value: nil,
+    hash_value: nil,
+    hash_included: true,
+    from_server: false,
+    conn: @conn
+%>

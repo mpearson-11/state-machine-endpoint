@@ -23,7 +23,11 @@ defmodule StateMachineEndpoint.PageController do
   end
 
   def delete_form(conn, %{"app_id" => id, "hash" => hash }) do
-    render conn, "_delete_form.html", app: id, hash: hash, hash_included: true, from_server: true
+    render conn, "_delete_form.html",
+      app_value: id,
+      hash_value: hash,
+      hash_included: true,
+      from_server: true
   end
 
   def error(conn, _params) do

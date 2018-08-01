@@ -1,8 +1,4 @@
 <div class="ui form">
   <h4 class="ui huge dividing header"><%= @humanized %></h4>
-   <%= if @value && @value != "" do %>
-    <div class="ui fluid input big"><input name="<%= @name %>" required="true" value="<%= @value %>" /> </div>
-   <% else %>
-    <div class="ui fluid input big"><input name="<%= @name %>" required="true" /> </div>
-   <% end %>
+  <div class="ui fluid input big"><input name="<%= @name %>" required="true" /> </div>
 </div>

@@ -1,46 +1,46 @@
 <br />
 <%= if @from_server == true do %>
-<div class="ui container">
-    <%= form_for @conn, endpoint_path(@conn, :delete), fn f -> %>
-        <div class="ui raised segments">
-            <div class="ui segment">
-                <%= render StateMachineEndpoint.PageView, "_field_readonly.html", name: "app", humanized: "Application", value: @app %>
+    <div class="ui container">
+        <%= form_for @conn, endpoint_path(@conn, :delete), fn f -> %>
+            <div class="ui raised segments">
+                <div class="ui segment">
+                    <%= render StateMachineEndpoint.PageView, "_field_readonly.html", name: "app", humanized: "Application", value: @app_value %>
+                </div>
             </div>
-        </div>
-        <%= if @hash_included != nil do %>
-          <div class="ui raised segments">
-              <div class="ui segment">
-                  <%= render StateMachineEndpoint.PageView, "_field_readonly.html", name: "hash", humanized: "Hash", value: @hash %>
-              </div>
-          </div>
+            <%= if @hash_included != nil do %>
+            <div class="ui raised segments">
+                <div class="ui segment">
+                    <%= render StateMachineEndpoint.PageView, "_field_readonly.html", name: "hash", humanized: "Hash", value: @hash_value %>
+                </div>
+            </div>
+            <% end %>
+            <div class="ui raised segments">
+                <div class="ui segment">
+                    <%= render StateMachineEndpoint.PageView, "_button.html", value: "Delete Application Endpoint" %>
+                </div>
+            </div>
         <% end %>
-        <div class="ui raised segments">
-            <div class="ui segment">
-                <%= render StateMachineEndpoint.PageView, "_button.html", value: "Delete Application Endpoint" %>
-            </div>
-        </div>
-    <% end %>
-</div>
+    </div>
 <% else %>
     <div class="ui container">
-    <form action="/state/pull" method="post" enctype='application/json'>
-        <div class="ui raised segments">
-            <div class="ui segment">
-                <%= render StateMachineEndpoint.PageView, "_field_with_value.html", name: "app", humanized: "Application", value: @app %>
+        <%= form_for @conn, endpoint_path(@conn, :delete), fn f -> %>
+            <div class="ui raised segments">
+                <div class="ui segment">
+                    <%= render StateMachineEndpoint.PageView, "_field_with_value.html", name: "app", humanized: "Application", value: @app_value %>
+                </div>
             </div>
-        </div>
-        <%= if @hash_included != nil do %>
-          <div class="ui raised segments">
-              <div class="ui segment">
-                  <%= render StateMachineEndpoint.PageView, "_field_with_value.html", name: "hash", humanized: "Hash", value: @hash %>
-              </div>
-          </div>
+            <%= if @hash_included != nil do %>
+            <div class="ui raised segments">
+                <div class="ui segment">
+                    <%= render StateMachineEndpoint.PageView, "_field_with_value.html", name: "hash", humanized: "Hash", value: @hash_value %>
+                </div>
+            </div>
+            <% end %>
+            <div class="ui raised segments">
+                <div class="ui segment">
+                    <%= render StateMachineEndpoint.PageView, "_button.html", value: "Delete Application Endpoint" %>
+                </div>
+            </div>
         <% end %>
-        <div class="ui raised segments">
-            <div class="ui segment">
-                <%= render StateMachineEndpoint.PageView, "_button.html", value: "Delete Application Endpoint" %>
-            </div>
-        </div>
-    </form>
-</div>
+    </div>
 <% end %>
