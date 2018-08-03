@@ -3,10 +3,10 @@ defmodule StateMachineEndpoint.UtilTest do
   alias StateMachineEndpoint.Util
   alias StateMachineEndpoint.State.{ConfigList, Config}
 
-  @config_1(%Config{id: "config_1", path: "/test/path-1", method: "GET", json: %{ "body" => "config_1" }, hash: "1234"})
-  @config_2(%Config{id: "config_2", path: "/test/path-2", method: "GET", json: %{ "body" => "config_2" }, hash: "1234" })
-  @config_3(%Config{id: "config_3", path: "/test/path-3", method: "GET", json: %{ "body" => "config_3" }, hash: "1234" })
-  @config_4(%Config{id: "config_4", path: "/test/path-4", method: "GET", json: %{ "body" => "config_4" }, hash: "1234" })
+  @config_1(%Config{id: "config_1", path: "/test/path-1", method: "GET", json: %{"body" => "config_1"}, hash: "1234"})
+  @config_2(%Config{id: "config_2", path: "/test/path-2", method: "GET", json: %{"body" => "config_2"}, hash: "1234"})
+  @config_3(%Config{id: "config_3", path: "/test/path-3", method: "GET", json: %{"body" => "config_3"}, hash: "1234"})
+  @config_4(%Config{id: "config_4", path: "/test/path-4", method: "GET", json: %{"body" => "config_4"}, hash: "1234"})
 
   @config_list_1(%ConfigList{list: [@config_1, @config_2]})
   @config_list_2(%ConfigList{list: [@config_3, @config_4]})
@@ -24,7 +24,7 @@ defmodule StateMachineEndpoint.UtilTest do
   end
 
   test "convert_endpoints_to_list/1" do
-    endpoints = %{ "app-1" => @config_list_1, "app-2" => @config_list_2 }
+    endpoints = %{"app-1" => @config_list_1, "app-2" => @config_list_2}
     ui_endpoint_list = Util.convert_endpoints_to_list(endpoints)
 
     assert Enum.at(ui_endpoint_list, 0) == %{

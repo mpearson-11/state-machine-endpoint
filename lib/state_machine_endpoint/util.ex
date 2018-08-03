@@ -1,5 +1,6 @@
 defmodule StateMachineEndpoint.Util do
-  @param_key ":"
+  @moduledoc false
+  @key ":"
   alias StateMachineEndpoint.State.{Config, ConfigList}
 
   def hash(str) do
@@ -8,10 +9,10 @@ defmodule StateMachineEndpoint.Util do
   end
 
   defp is_param?(app_key) do
-    String.starts_with?(app_key, @param_key)
+    String.starts_with?(app_key, @key)
   end
-  defp param_key(app_key) do
-    app_key |> String.replace(@param_key, "")
+  defp param_key(key) do
+    key |> String.replace(@key, "")
   end
 
   defp equal_keys(nil, _url_key), do: false
@@ -19,7 +20,7 @@ defmodule StateMachineEndpoint.Util do
     is_param?(app_key) || app_key == url_key
   end
 
-  defp accumulate({ item, index }, acc) do
+  defp accumulate({item, index}, acc) do
     Map.put(acc, "param-#{index}", item)
   end
 
@@ -54,7 +55,7 @@ defmodule StateMachineEndpoint.Util do
     end
   end
 
-  defp reduce_params({ item, index }, acc, url_abs_path) do
+  defp reduce_params({item, index}, acc, url_abs_path) do
     case is_param?(item) do
       true -> Map.put(acc, param_key(item), Enum.at(url_abs_path, index))
       _ -> acc
@@ -74,22 +75,33 @@ defmodule StateMachineEndpoint.Util do
     end
   end
 
-  def add_to_list(app_name, %Config{id: id, method: method, path: path, hash: hash, json: json}) do
-    %{
-      "name" => app_name,
-      "id" => id,
-      "method" => method,
-      "path" => path,
-      "hash" => hash,
-      "json" => Poison.encode!(json, pretty: true)
-    }
+  defp atom_map_to_string_map(config) do
+    config
+    |> Map.keys
+    |> Enum.reduce(%{}, fn(key, acc) ->
+      Map.put(acc, key |> to_string, config[key])
+    end)
   end
 
-  def convert_endpoints_to_list(endpoints) do
-    apps = Map.keys(endpoints)
-    Enum.reduce(apps, [], fn(app_key, acc) ->
-      %ConfigList{list: app_list} = endpoints[app_key]
-      acc ++ Enum.map(app_list, &(add_to_list(app_key, &1)))
-    end)
+  def add_to_list(app_name, config) do
+    json = config
+    |> Config.get(:json)
+    |> Poison.encode!(pretty: true)
+
+    config
+    |> Map.delete(:__struct__)
+    |> atom_map_to_string_map
+    |> Map.put("json", json) # override json value
+    |> Map.put("name", app_name) # add name to Map
+  end
+
+  defp reduce_list(app_key, acc, %ConfigList{list: app_list}) do
+    acc ++ Enum.map(app_list, &(add_to_list(app_key, &1)))
+  end
+
+  def convert_endpoints_to_list(apps) do
+    apps
+    |> Map.keys # find all keys in state["endpoints"]
+    |> Enum.reduce([], &(reduce_list(&1, &2, apps[&1])))
   end
 end

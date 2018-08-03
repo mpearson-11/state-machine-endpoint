@@ -1,4 +1,5 @@
 defmodule StateMachineEndpoint.State.ConfigList do
+  @moduledoc false
   defstruct [list: []]
 
   alias StateMachineEndpoint.State.{Config, ConfigList}
@@ -15,7 +16,7 @@ defmodule StateMachineEndpoint.State.ConfigList do
     p == equal_path
   end
 
-  def exists_config_path?(%ConfigList{ list: old_list }, %Config{path: path}) do
+  def exists_config_path?(%ConfigList{list: old_list}, %Config{path: path}) do
     Enum.any?(old_list, &(config_path(&1, path)))
   end
 

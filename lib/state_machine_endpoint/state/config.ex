@@ -1,4 +1,5 @@
 defmodule StateMachineEndpoint.State.Config do
+  @moduledoc false
   defstruct [id: nil, path: "", method: "GET", json: %{}, hash: ""]
 
   alias StateMachineEndpoint.State.Config

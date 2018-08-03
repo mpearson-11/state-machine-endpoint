@@ -27,7 +27,9 @@ defmodule StateMachineEndpoint.ApiController do
     |> get_data(path)
   end
 
-  def get_endpoint_data(nil, _path, _method), do: %{ message: "App does not exist!!" }
+  def get_endpoint_data(nil, _path, _method) do
+    %{message: "App does not exist!!"}
+  end
   def get_endpoint_data(configs, path, method) do
     configs
     |> ConfigList.get
@@ -61,7 +63,7 @@ defmodule StateMachineEndpoint.ApiController do
   def options(conn, %{"path" => path, "app_id" => id}) do
     %Plug.Conn{req_headers: h} = conn
     method = find_request_headers(h)
-    
+
     data = id
     |> Apps.get_endpoint
     |> get_endpoint_data(path, method)

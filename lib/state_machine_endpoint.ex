@@ -1,4 +1,5 @@
 defmodule StateMachineEndpoint do
+  @moduledoc false
   use Application
 
   def get_children(:test, children), do: children

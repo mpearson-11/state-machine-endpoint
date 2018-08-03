@@ -1,10 +1,11 @@
 defmodule StateMachineEndpoint.State do
+  @moduledoc false
   defstruct [endpoints: %{}]
 
   alias StateMachineEndpoint.State
   alias StateMachineEndpoint.State.{Config, ConfigList}
 
-  def get_endpoints(%State{ endpoints: e }), do: e
+  def get_endpoints(%State{endpoints: e}), do: e
 
   defp create_endpoints(state, endpoint) do
     id = endpoint |> Config.get(:id)
@@ -42,7 +43,7 @@ defmodule StateMachineEndpoint.State do
   end
 
   def remove_endpoint_path(endpoints, id, hash) do
-    endpoint_list = %ConfigList{list: reduce_to_list(endpoints[id], hash) }
+    endpoint_list = %ConfigList{list: reduce_to_list(endpoints[id], hash)}
     Map.put(endpoints, id, endpoint_list)
   end
 end

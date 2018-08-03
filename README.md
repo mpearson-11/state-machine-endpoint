@@ -47,3 +47,13 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - **/delete-path**
   - Remove an Application's path associated with its hash
 
+## Running the Application in Docker
+
+### Build The Application image
+- `docker-compose build`
+
+### Start the Application
+- `docker-compose up phoenix`
+
+### Run Linting
+- `mix credo`

@@ -17,7 +17,7 @@ defmodule StateMachineEndpoint.EndpointController do
     end
   end
 
-  defp convert_structure(%{ "app" => id, "json" => json_data, "method" => method, "path" => path }) do
+  defp convert_structure(%{"app" => id, "json" => json_data, "method" => method, "path" => path}) do
     %Config{id: id, json: json_data, method: method, path: path, hash: Util.hash("#{id}#{path}")}
     |> Apps.create_endpoint
     |> set_message("Application now running on url: /api/#{id}#{path}, method: #{method}")
@@ -28,17 +28,18 @@ defmodule StateMachineEndpoint.EndpointController do
   end
 
   def create(conn, params) do
-    data = mutate_json(params)
+    data = params
+    |> mutate_json
     |> convert_structure
 
     json conn, data
   end
 
-  def delete(conn, %{ "app" => id, "hash" => hash }) do
+  def delete(conn, %{"app" => id, "hash" => hash}) do
     json conn, Apps.delete_endpoint_path(id, hash)
   end
 
-  def delete(conn, %{ "app" => id }) do
+  def delete(conn, %{"app" => id}) do
     json conn, Apps.delete_endpoint(id)
   end
 
