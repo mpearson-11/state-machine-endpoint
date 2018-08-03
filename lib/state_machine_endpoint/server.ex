@@ -1,7 +1,7 @@
 defmodule StateMachineEndpoint.Server do
   @moduledoc false
 
-  alias StateMachineEndpoint.State
+  alias StateMachineEndpoint.{Message, State}
   use GenServer
 
   @start_state(%State{})
@@ -10,7 +10,6 @@ defmodule StateMachineEndpoint.Server do
   defp write_store(state) do
     File.write!(@datastore, :erlang.term_to_binary(state))
   end
-
 
   defp to_binary({:error, :enoent}), do: @start_state
   defp to_binary({:ok, ""}), do: @start_state
@@ -25,7 +24,6 @@ defmodule StateMachineEndpoint.Server do
   end
 
   def start_link(params) do
-    StateMachineEndpoint.Message.log("StateMachineEndpoint GenServer just started with empty endpoints")
     GenServer.start_link(__MODULE__, read_store(), params)
   end
 
@@ -34,26 +32,30 @@ defmodule StateMachineEndpoint.Server do
   end
 
   def handle_cast({:set, :endpoint, endpoint}, state) do
-    StateMachineEndpoint.Message.log("New endpoint")
+    Message.log("New endpoint")
+
     new_state = state
     |> State.set_endpoints(endpoint)
 
     # Write to datastore.bin
     write_store(new_state)
+
     {:noreply, new_state}
   end
 
   def handle_cast({:delete, :endpoint, id}, state) do
-    StateMachineEndpoint.Message.log("Deleting endpoint: #{id}")
+    Message.log("Deleting endpoint: #{id}")
+
     new_state = %State{endpoints: Map.delete(State.get_endpoints(state), id)}
 
     # Write to datastore.bin
     write_store(new_state)
+
     {:noreply, new_state}
   end
 
   def handle_cast({:delete_endpoint, :path, id, hash}, state) do
-    StateMachineEndpoint.Message.log("Deleting endpoint path: #{id} -> #{hash}")
+    Message.log("Deleting endpoint path: #{id} with hash: #{hash}")
 
     endpoints = state
     |> State.get_endpoints
@@ -63,11 +65,16 @@ defmodule StateMachineEndpoint.Server do
 
     # Write to datastore.bin
     write_store(new_state)
+
     {:noreply, new_state}
   end
 
-  def handle_cast(:clear, _state) do
-    StateMachineEndpoint.Message.log("HARD RESET")
+  def handle_cast({:clear}, _state) do
+    Message.log("Clear all state")
+
+    # Write to datastore.bin
+    write_store(@start_state)
+
     {:noreply, @start_state}
   end
 
