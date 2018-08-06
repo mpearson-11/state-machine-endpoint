@@ -34,6 +34,16 @@ defmodule StateMachineEndpoint.Router do
     post "/*path", EndpointController, :error
   end
 
+  scope "/delete", StateMachineEndpoint do
+    pipe_through :browser
+
+    get "/:app/:hash", EndpointController, :delete
+
+    # Wildcard catch
+    get "/*path", EndpointController, :error
+    post "/*path", EndpointController, :error
+  end
+
   scope "/", StateMachineEndpoint do
     pipe_through :browser
 
@@ -41,7 +51,7 @@ defmodule StateMachineEndpoint.Router do
     get "/add", PageController, :create
     get "/delete-app", PageController, :delete_app
     get "/delete-path", PageController, :delete_path
-    get "/delete/:app_id/:hash", PageController, :delete_form
+
 
     # Wildcard catch
     get "/*path", PageController, :error

@@ -9,7 +9,7 @@ use Mix.Config
 config :state_machine_endpoint, StateMachineEndpoint.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "MlRMFhFnPPOwOZajZ8XaCf2hVuaDtLX3yvVUtdxvVAtsm/jjPdg/G/ZO5mhwkl73",
-  render_errors: [view: StateMachineEndpoint.ErrorView, accepts: ~w(json)],
+  render_errors: [view: StateMachineEndpoint.ErrorView, accepts: ~w(html json)],
   pubsub: [name: StateMachineEndpoint.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
