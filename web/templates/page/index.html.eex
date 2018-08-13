@@ -14,7 +14,6 @@
             <div class="ui segment big"><b><%= app["method"] %></b></div>
             <div class="ui segment big"><%= "/api/#{app["id"]}" %></div>
             <div class="ui segment big"><%= app["path"] %></div>
-            <div class="ui segment big"><b>HASH:</b> <%= app["hash"] %></div>
         </div>
         <div class="ui segments">
             <div class="ui segment">
