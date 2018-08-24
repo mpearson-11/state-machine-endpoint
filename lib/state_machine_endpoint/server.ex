@@ -5,7 +5,7 @@ defmodule StateMachineEndpoint.Server do
   use GenServer
 
   @start_state(%State{})
-  @datastore "datastore.bin"
+  @datastore "#{Mix.env}store.bin"
 
   defp write_store(state) do
     File.write!(@datastore, :erlang.term_to_binary(state))

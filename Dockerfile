@@ -17,4 +17,5 @@ WORKDIR /app
 RUN mix deps.get
 
 # run phoenix in *dev* mode on port 4000
-CMD mix phoenix.server
+CMD mix phx.digest
+CMD mix phx.server
